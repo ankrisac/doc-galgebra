@@ -1,0 +1,183 @@
+:root {
+    --prim-dark: #000000;
+    --prim-med: #0C0C0C;
+    --prim: #111111;
+    --high-A: #FF0088;
+    --high-B: #00DDDD;
+
+    --text-dark: #AAAAAA;
+    --text: #EEEEEE;
+}
+
+::selection {
+    color: var(--high-A);
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--prim-dark);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--high-A);
+}
+
+* {
+    transition: 0.2s;
+
+    scrollbar-color: var(--high-A) var(--prim-dark);
+    scrollbar-width: thin;
+}
+
+
+@font-face {
+    font-family: "Computer Modern";
+    src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunss.otf');
+}
+@font-face {
+    font-family: "Computer Modern";
+    src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsx.otf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Computer Modern";
+    src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunsi.otf');
+    font-style: italic, oblique;
+}
+@font-face {
+    font-family: "Computer Modern";
+    src: url('http://mirrors.ctan.org/fonts/cm-unicode/fonts/otf/cmunbxo.otf');
+    font-weight: bold;
+    font-style: italic, oblique;
+}
+
+html, body {
+    background: var(--prim);
+    color: white;
+    font-family: "Computer Modern";
+}
+html {
+    min-height: 100%;
+
+    padding: 0;
+    margin: 0;
+    display: inline;
+}
+body {
+    padding: 5px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-items: stretch;
+
+}
+
+
+article > * {
+    margin: 0;
+}
+article > header > h2 {
+    font-size: 250%;
+}
+
+
+article > header {
+    font-family: 'Comfortaa', cursive;
+    font-weight: bold;
+
+    color: var(--high-B);
+    text-shadow: 3px 3px var(--high-A);
+}
+article > header > p {
+    text-shadow: none;
+    color: var(--high-A);
+}
+article > header > p::selection {
+    color: var(--high-B);
+}
+article > header:hover > h2 {
+    text-shadow: 2px 2px var(--high-A);
+}
+article > header:hover {
+    background: var(--prim-med);
+    border-bottom: solid 1px var(--high-B);
+}
+article.view > header {
+    border-bottom: solid 1px var(--high-A);
+}
+article.view > header:hover {
+    border-bottom: solid 1px var(--high-B);
+}
+
+@media (max-width: 1000px) {
+    article {
+        width: 80%;
+    }
+    article > header {
+        padding: 20px;
+    }
+    article.view > .content {
+        padding: 20px;
+    }
+}
+@media (min-width: 1000px) {
+    article {
+        width: 800px;
+    }
+    article > header {
+        padding: 50px;
+    }
+    article.view > .content {
+        padding: 50px;
+    }
+}
+
+article {
+    margin: 10px;
+    box-shadow: 0px 2px 2px 3px var(--prim-dark);
+}
+article > .content {
+    max-height: 0;
+    overflow: hidden;
+}
+article.view > .content {
+    max-height: none;
+}
+article p {
+    margin-bottom: 30px;
+}
+
+
+aside{
+    margin: 0.25em 0 0.25em 0.25em;
+    border-left: solid 2px var(--high-A);
+    background: var(--prim-med);
+}
+aside > * {
+    padding: 0.5em 0.1em 0.5em 1em;
+}
+
+aside:hover {
+    border-left: solid 2px var(--high-B);
+}
+aside > header:hover {
+    background: var(--prim-dark);
+}
+aside.view > header {
+    padding-bottom: 10px;
+    border-bottom: solid 2px var(--prim);
+}
+aside > div.max, aside.view > div.min { 
+    display: none;
+}
+aside.view > div.max, aside > div.min { 
+    display: block;
+}
+
+
+.katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+}

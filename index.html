@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title> Geometric Algebra </title>  
+
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">   <link href="style.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
+
+</head>
+<body>
+  <script src="DOM.js"></script>
+  <script src="vector.js"></script>
+  <header> Geometric Algebra </header>
+
+  <article>
+    <header> 
+      <h2> \(\mathbb{C}\) : "Imaginary" Numbers </h2>
+      <p> 
+        Or, why would anyone invent new numbers to 
+        solve an equation no one asked the answer for 
+      </p>
+    </header>
+
+    <div class="content">
+      <p>
+        To understand Complex numbers, we first need 
+        to rewind back to 1545. The standard story for its 
+        invention, involves finding the solution to
+        $$x^2 + 1 = 0$$
+        
+        Which supposedly is continuing the tradition of 
+        solving equations such as
+        $$
+        \begin{aligned}
+        2x = 3 && \Rightarrow &&& \mathbb{Q^+} 
+        \\ x^2 = 2 && \Rightarrow &&& \mathbb{R^+}
+        \\ x + 4 = 0 && \Rightarrow &&& \mathbb{Z}
+        \\ 5x = -3 && \Rightarrow &&& \mathbb{Q} 
+        \end{aligned}
+        $$
+        
+        However, this viewpoint ignores the fact that all the
+        previous equations had some form of physical interpretation.  
+      </p>
+
+      <p>
+        The actual origins of Complex numbers began with cubic equations.
+        $$ax^3 + bx^2 + cx + d = 0$$   
+
+        The solutions to cubic equations had been an unsolved problem
+        for millenia, and it stumped many as to how the general cubic 
+        equation was so much harder to solve than the general quadratic 
+        equation. It took until the 16th century, when the solution 
+        to the reduced cubic equation was finally found by Tartigali
+        
+        $$x^3 + px + q = 0$$
+        $$
+        \begin{aligned}
+        D &= \left(\frac q2\right)^2 + \left(\frac{p}{3}\right)^3
+        \\ C_+, C_- &= \sqrt[3]{-\frac q2 \pm \sqrt D}
+        \\ x &= C_+ + C_-
+        \end{aligned}
+        $$
+        
+        However, this equation had some peculiar properties, 
+        for instance, if one were to solve by graphing or by 
+        trial and error
+        
+        $$x^3 - 6x - 4 = 0$$
+        $$x = -2, 1 \pm \sqrt 3$$
+        In contrast, using the cubic equation yields
+        $$
+        
+        \begin{aligned}
+        x = \sqrt[3]{2 - \sqrt{-4}} + \sqrt[3]{2 + \sqrt{-4}}
+        \end{aligned}
+        $$
+        
+        But if one treated these square roots of negative
+        numbers <em>algebraicly</em> and simplified them, they 
+        would yield <em>the same solutions</em> as above.
+      </p>
+
+      <p>
+        This suggested that there was something deeper, and was
+        the mystery that sparked the invention of complex numbers
+      </p>
+    </div>
+  </article>
+
+
+  <article>
+    <header>
+      <h2> \(a \times b\) : Cross ... Product? </h2>
+      <p> 
+        Why are right handed people suddenly fundamental 
+        to the structure of the universe ? 
+      </p>
+    </header> 
+    
+    <div class="content">
+      <p>
+        Prior to the invention of vectors, mathematicans and physicists 
+        needed a way to manipulate 3D coordinates in the same manner 
+        as complex numbers did for 2D, as manipulating equations in
+        component form was cumbersome. This was the problem that 
+        Hamilton decided to tackle, and he tried for many years in vain.
+      </p>
+
+      <p>
+        His first insight was that he would need to add a new
+        imaginary constant \(j\). This was motivated by the fact that
+        with complex numbers
+        $$
+        \begin{aligned}
+        (-1)^2 = 1 && i^2 = 1
+        \end{aligned}
+        $$
+        there were two axes that squared to one. However, unlike 
+        \(\mathbb{C}\), his new system would have to remove commutativity, 
+        otherwise it would be possible to equate \(j\) and \(i\). 
+        This was not sufficent though, as many simple geometric theorems 
+        did not hold. 
+      </p>
+
+      <p>
+        Years later in 1843, he realized that he needed <em> three </em> 
+        imaginary constants \(i, j, k\), (thus constructing a 4D system),
+        in order to do 3D arithmetic. Additionally, he set \(ijk = -1\)
+        to create a relation between the constants.
+        
+        $$i^2 = j^2 = k^2 = ijk = -1$$
+        $$q = \underbrace{a}_\text{scalar} 
+            + \underbrace{bi + cj + dk}_\text{vector}$$
+        
+        These rules enabled quaternions to be more powerful than 
+        modern vector algebra (which was yet to be invented), with 
+        addition, subtraction being identical to complex numbers, but 
+        even multiplication and division were both possible 
+        (unlike with vectors).
+
+        $$
+        \begin{aligned}
+             z^{-1} &= \frac {z^*} {|z|^2} 
+          = \frac
+            {
+              \overbrace{\left(a - bi\right)}
+              ^{\mathbb{C}\text{ conjugate}}
+            }
+            {a^2 + b^2}
+             
+          \\ q^{-1} &= \frac {q^*} {|q|^2} 
+          = \frac{
+              \overbrace{\left(a - bi - cj - dk\right)}
+              ^{\mathbb{H}\text{ conjugate}}
+            }
+            {a^2+b^2+c^2+d^2}
+             
+        \end{aligned}
+        $$
+      </p>
+      <p>
+        Multiplication of two purely imaginary quaternions 
+        and simplification yielded
+        <aside>
+          <header> $$AX = (ai+bj+ck)(xi+yj+zk)$$ </header>          
+          $$
+          \begin{aligned}
+          \end{aligned}
+          $$
+        </aside>
+        
+        $$
+        \begin{aligned}
+          \\AX =& -(ax + by + cz) 
+          \\ & +(bz - cy)i - (az-cx)j + (ay - bx)k
+        \end{aligned}
+        $$
+        
+        The above expression upon inspection appears to be 
+        composed of a dot product and cross product
+        $$\vec{A}\;\vec{X} = \vec{A} \times \vec{X} - \vec{A} \cdot \vec{X}$$
+
+        This is no coincidence, as <em> this </em> is the 
+        origin of the two operators. Quaternions, as powerful
+        as it was, were incredibly difficult to visualize. His 
+        contemporaries, Gibbs & Heaviside attempted to remove the 
+        two operators from their original context, and created 
+        the right hand rule to replicate the quaternion rules, 
+        thus creating modern vector analysis.
+
+        And if we pay further attention, we can see the historical 
+        relics of quaternions in their modern vector notation
+
+        $$
+        \begin{pmatrix} a \\ b \\ c \end{pmatrix} 
+          = a\hat{\textbf{i}} + b\hat{\textbf{j}} + c\hat{\textbf{k}} 
+          \iff a + bi + cj + dk 
+        $$
+
+        The right hand rule similarly originates from here, as it
+        was an arbitrary adhoc explanation added on top of vectors to 
+        simulate the multiplication rules of purely imaginary quaternions.
+      </p>
+
+      <p>
+        As such, the cross product is an adhoc mismatch of partial 
+        quaternion multiplication forced into 3D geometry, and falls
+        apart outside of 3D geometry.
+      </p>
+    </div>
+  </article>
+
+  <article>
+    <header> 
+      <h2> \(a\wedge b\) : Wedge Product! </h2> 
+      <p> Out with the new and ... in with the old ? </p> 
+    </header>
+    
+    <div class="content">
+      <p>
+        Simuntaneously as Hamilton was developing his quaternions, Grassmann
+        was developing his theory of exterior algebra and multivectors
+      </p>
+
+      <p>
+        Exterior algebra extends the notion of vectors from simply oriented lengths,
+        to more general measures such areas, volumes etc, each represented as
+        bivectors, trivectors, etc respectively
+
+        <canvas id="diagram-1"></canvas>
+        <script>
+          const cnv = $("#diagram-1");
+          const ctx = cnv.getContext("2d");
+
+          let [width, height] = [cnv.innerWidth, cnv.innerHeight];
+          
+          ctx.fillStyle = "red";
+          ctx.fillRect(0, 0, width, height);
+        
+        </script>
+      </p>
+
+      <p>
+      </p>
+    </div>
+  </article>
+
+  <article>
+    <header> 
+      <h2> \(det(A)\) : Determinants </h2> 
+      <p> But determining what ? </p> 
+    </header>
+
+    <div class="content">
+      <p>
+        One of the most useful aspects of the wedge product is 
+        to motivate the theory of determinants.
+      </p>  
+      
+      <p>
+        The determinant, is usually introduced as simply a formula
+        $$\begin{vmatrix} a&b \\ c&d\end{vmatrix} = ad - bc$$
+        And an algorithm (Laplace's expansion) is used 
+        to defined higher order determinants
+        $$
+        \begin{vmatrix} a&b&c \\ d&e&f \\ g&h&i \end{vmatrix} = 
+        + a \begin{vmatrix} e & f \\ h & i \end{vmatrix}
+        - b \begin{vmatrix} d & f \\ g & i \end{vmatrix}
+        + c \begin{vmatrix} d & e \\ g & h \end{vmatrix}
+        $$
+        Or alternatively it may be defined as the unique multilinear 
+        alternating function, from which all of its properties may
+        be derived, but this approach does not provide much 
+        geometric insight.
+      </p>
+
+      <p>
+        However, using the wedge product, a simple geometric 
+        interpretation is possible
+        $$
+        \begin{vmatrix} 
+             a_1    & b_1    & \dots  & z_1 
+          \\ a_2    & b_2    & \dots  & z_2
+          \\ \vdots & \vdots & \ddots & \vdots 
+          \\ a_n    & b_n    & \dots  & z_n
+        \end{vmatrix}
+        = \frac{\vec{a} \wedge \vec{b} \wedge \dots \wedge \vec{z}}
+          {i \wedge j \wedge \dots}
+        $$
+        In short, the determinant represents a generalization 
+        of areas, and volumes to N dimensions.
+        For instance in 2D, it is the area of a parallelogram spanned by 2 vectors.
+        And in 3D, it is the volume of a parallelopiped spanned by 3 vectors.
+      </p>
+
+      <p>
+        Many properties of the wedge product 
+        $$
+        \begin{aligned}
+           a \wedge a    &= 0
+        \\ k(a \wedge b) &= (ka) \wedge b     
+        \\ a \wedge b    &= -b \wedge a
+        \\ a \wedge b    &= a \wedge b + k(b \wedge b) = (a + kb)\wedge b 
+        \end{aligned}
+        $$
+        thus are also inherited by the determinant
+        $$
+        \begin{aligned}
+           \det(\dots, a, \dots, a, \dots) &= 0
+        \\ \det(\dots, ka, \dots)          &= k \det(\dots, a, \dots)            
+        \\ \det(\dots, a, b, \dots)        &= -\det(\dots, b, a, \dots)            
+        \\ \det(\dots, a, \dots, b, \dots) &= \det(\dots, a, \dots, b + ka, \dots)
+        \end{aligned}
+        $$
+      </p>
+
+      <aside>
+        <header> 
+          Laplace's expansion as mentioned earlier, simply becomes
+          a specific manner of evaluating the wedge product 
+        </header>
+        
+        <div class="max">
+          $$
+          \begin{vmatrix} a&d&g \\ b&e&h \\ c&f&i \end{vmatrix} = 
+          (ai + bj + ck) \wedge (di + ej + fk) \wedge (gi + hj + ik)  
+          $$
+        
+          <p>
+            By expanding the first term and eliminating repeated basis
+            vectors we obtain
+          </p>
+        
+          $$
+          \begin{aligned}
+            = &+ ai \wedge (di + ej + fk) \wedge (gi + hj + ik) + \dots
+          \\ = &+ \underbrace{ai \wedge di}_0 \wedge (gi + hj + ik)
+          \\   &+ \underline{ai} \wedge (ej + fk) \wedge \underline{gi}
+          \\   &+ ai \wedge (ej + fk) \wedge (hj + ik)
+          \\   &+ \underbrace{bj \wedge (di + ej + fk)}
+                  _\text{swap and expand} \wedge (gi + hj + ik)
+          \\   &+ \dots
+          \\ = &+a \begin{vmatrix} e & f \\ h & i \end{vmatrix} 
+                -d \begin{vmatrix} b & h \\ c & i \end{vmatrix} 
+                +g \begin{vmatrix} b & e \\ c & f \end{vmatrix}
+          \end{aligned}
+          $$      
+          <p>
+            Similarly, by using the swapping property of determinants,
+            expansion on any other column is possible, as well as 
+            generalizing it to N dimensions. Thus, for any column \(J\)
+            $$
+            \det(A_{M\times N}) = \sum_{i=1}^M (-1)^{i + J}det(M_{iJ})
+            $$
+            Where \(M_{ij}\) is a minor (subset of matrix \(A\)
+            with row \(i\), and column \(j\) removed)
+          </p>
+        
+          <p>
+            We can also show that expansion on the row follows similarly, 
+            due to the invariance of the determinant under transpose
+            \((\det{A^T} = \det A\))
+          </p>
+
+        </div>
+      </aside>
+
+      <p>
+        Further more, as every vector can be decomposed into 
+        its components, the Leibniz formula just says that expanding 
+        the following product
+        $$
+        \begin{aligned}
+        \det(A)(i\wedge j\wedge \dots) 
+           = &(a_1i + a_2j + \dots)\wedge
+        \\ &(b_1i + b_2j + \dots)\wedge\dots
+        \end{aligned}    
+        $$
+        will give every possible combination of wedging the components,
+        such that none of the basis vectors are repeated (as \(i\wedge i = 0\), etc)
+        $$(a_xb_y\dots) (i\wedge j\wedge \dots)$$
+        
+        and the sign determined by the particular number of steps required to
+        convert the basis vectors into standard form, for example 
+        $$
+        \begin{aligned}
+           &(a_2j)\wedge(b_1i)\wedge(c_3k) 
+        \\ =& +a_2b_1c_3 (j\wedge i\wedge k)
+        \\ =& -a_2b_1c_3 (i\wedge j\wedge k)
+        \end{aligned}
+        $$
+        And of course the above result can be made to look 
+        overcomplicated, resulting in the Leibniz formula
+        $$
+        \det(A) = \sum_{\tau \in S_n}
+        \sigma(\tau)\prod_{i = 1}^n a_{i, \tau(i)}
+        $$
+        $$
+        \det(A) = 
+        \underbrace{\sum_{\tau \in S_n}}_\text{sum all combinations}
+        \overbrace{\sigma(\tau)}^\text{correct the sign}
+        \underbrace{\prod_{i = 1}^n a_{i, \tau(i)}}_\text{multiply components}
+        $$
+        
+      </p>
+      
+    <div>
+  </article>
+
+  <article>
+    <header> 
+      <h2> \(A^{-1}x\) : Cramer's Rule </h2> 
+      <p> Linear equations </p> 
+    </header>
+  </article>
+
+  <article>
+    <header> 
+      <h2> \(\mathcal{G}^n\) : Geometric Algebra </h2> 
+      <p> Out with the new and ... in with the old ? </p> 
+    </header>
+  </article>
+
+  <script>
+    let prev = null;
+    for(let node of $("article")) {
+      $("header", node)[0].onclick = () => {
+        node.classList.toggle("view");
+
+        if(prev !== null && prev !== node){
+          prev.classList.remove("view");
+        }
+        prev = node;
+      } 
+    }
+    for(let node of $("aside")) {
+      $("header", node)[0].onclick = () => 
+        node.classList.toggle("view");
+    }
+  </script>
+
+</body>
+</html>
