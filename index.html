@@ -371,45 +371,74 @@
         </div>
       </aside>
 
-      <p>
-        Further more, as every vector can be decomposed into 
-        its components, the Leibniz formula just says that expanding 
-        the following product
-        $$
-        \begin{aligned}
-        \det(A)(i\wedge j\wedge \dots) 
-           = &(a_1i + a_2j + \dots)\wedge
-        \\ &(b_1i + b_2j + \dots)\wedge\dots
-        \end{aligned}    
-        $$
-        will give every possible combination of wedging the components,
-        such that none of the basis vectors are repeated (as \(i\wedge i = 0\), etc)
-        $$(a_xb_y\dots) (i\wedge j\wedge \dots)$$
-        
-        and the sign determined by the particular number of steps required to
-        convert the basis vectors into standard form, for example 
-        $$
-        \begin{aligned}
-           &(a_2j)\wedge(b_1i)\wedge(c_3k) 
-        \\ =& +a_2b_1c_3 (j\wedge i\wedge k)
-        \\ =& -a_2b_1c_3 (i\wedge j\wedge k)
-        \end{aligned}
-        $$
-        And of course the above result can be made to look 
-        overcomplicated, resulting in the Leibniz formula
-        $$
-        \det(A) = \sum_{\tau \in S_n}
-        \sigma(\tau)\prod_{i = 1}^n a_{i, \tau(i)}
-        $$
-        $$
-        \det(A) = 
-        \underbrace{\sum_{\tau \in S_n}}_\text{sum all combinations}
-        \overbrace{\sigma(\tau)}^\text{correct the sign}
-        \underbrace{\prod_{i = 1}^n a_{i, \tau(i)}}_\text{multiply components}
-        $$
-        
-      </p>
-      
+      <aside>
+        <header>
+          The Leibniz determinant formula also follows from the wedge 
+          product definition, and can be used to prove
+          $$\det A^T = \det A$$ 
+        </header>
+        <div class="max"> 
+          <p>
+            For a \(N\times N\) matrix \(A\), instead of expanding one column, we completely expand
+            every column simuntaneously. 
+          </p>
+          
+          $$
+          \begin{aligned}
+          \det(A) &= 
+                 \begin{pmatrix} a\\\vdots\\\phantom{x} \end{pmatrix}
+          \wedge \begin{pmatrix} \phantom{x}\\\vdots\\b \end{pmatrix}
+          \wedge \begin{pmatrix} \vdots\\c\\\vdots \end{pmatrix}
+          \\ &= \dots + abc(i\wedge k\wedge j) + \dots
+          \\ &= (\dots -acb + \dots)(i\wedge j \wedge k)
+          \end{aligned}
+          $$
+
+          <p>
+            Thus the expansion yields the sum of every possible
+            combination of wedge products terms, taking one 
+            component from each column. 
+            And due to repeated basis vectors equaling zero, 
+            the components are only from unique rows. 
+          </p>
+            
+          <p>
+            The swapping procedure is formalized as \(\sigma(\tau)\),
+            also known as the parity function
+
+            $$\sigma(\tau) = (-1)^N$$
+            where \(N\) is the number of steps taken to convert
+            the basis vectors to standard form, for a given 
+            permutation \(\tau\)
+            $$
+            \begin{aligned}
+            \sigma(132) &= i\wedge \underbrace{k \wedge j}_{N = \text{1 swap}} 
+            \\ &= (-1)^1(i\wedge j\wedge k) = -\sigma(123)
+            \end{aligned}
+            $$
+          </p>
+
+          <p>
+            This can be rexpressed as, \(\det(A_{N\times N})\) is 
+            the sum of every possible wedge product taking \(N\) 
+            components such that no row or column is repeated
+          </p>
+
+          $$
+            \det(A) = \sum_{\tau \in S_n}
+            \sigma(\tau)\prod_{i = 1}^n a_{i, \tau(i)}
+          $$
+          $$
+            \det(A) = 
+            \underbrace{\sum_{\tau \in S_n}}_\text{sum all combinations}
+            \overbrace{\sigma(\tau)}^\text{correct the sign}
+            \underbrace{\prod_{i = 1}^n a_{i, \tau(i)}}_\text{multiply components}
+          $$
+          <p>
+
+          </p>
+        </div>
+      </aside>      
     <div>
   </article>
 
@@ -435,6 +464,9 @@
 
         if(prev !== null && prev !== node){
           prev.classList.remove("view");
+          for(let child of $("aside", prev)) {
+            child.classList.remove("view");
+          }
         }
         prev = node;
       } 
