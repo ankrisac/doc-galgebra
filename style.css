@@ -76,6 +76,14 @@ body {
 
 }
 
+body > header {
+    font-family: 'Comfortaa', cursive;
+    font-weight: bold;
+    font-size: 200%;
+
+    color: var(--high-B);
+    text-shadow: 3px 3px var(--high-A);
+}
 
 article > * {
     margin: 0;
