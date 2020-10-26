@@ -2,8 +2,10 @@
     --prim-dark: #000000;
     --prim-med: #0C0C0C;
     --prim: #111111;
+
     --high-A: #FF0088;
     --high-B: #00DDDD;
+    --high-C: #DDDD00;
 
     --text-dark: #AAAAAA;
     --text: #EEEEEE;
@@ -180,4 +182,13 @@ aside.view > div.max, aside > div.min {
 .katex-display {
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+.diagram {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+}
+.diagram > canvas {
+    box-shadow: 0px 0px 1px 2px var(--prim-dark);
 }

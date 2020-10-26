@@ -1,7 +1,4 @@
-const $ = (selector, node = null) => {
-    if(node === null){
-        node = document;
-    }
+const $ = (selector, node = document) => {
 
     switch(selector[0]) {
         case ".": return node.getElementsByClassName(selector.slice(1));
@@ -9,3 +6,5 @@ const $ = (selector, node = null) => {
         default: return node.getElementsByTagName(selector);
     }
 }; 
+$.css_get = (val, node = document.body) => 
+    getComputedStyle(node).getPropertyValue(val);

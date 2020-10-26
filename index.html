@@ -167,17 +167,11 @@
       <p>
         Multiplication of two purely imaginary quaternions 
         and simplification yielded
-        <aside>
-          <header> $$AX = (ai+bj+ck)(xi+yj+zk)$$ </header>          
-          $$
-          \begin{aligned}
-          \end{aligned}
-          $$
-        </aside>
         
         $$
         \begin{aligned}
-          \\AX =& -(ax + by + cz) 
+             AX =& (ai+bj+ck)(xi+yj+zk)  
+          \\ AX =& -(ax + by + cz) 
           \\ & +(bz - cy)i - (az-cx)j + (ay - bx)k
         \end{aligned}
         $$
@@ -232,22 +226,121 @@
         Exterior algebra extends the notion of vectors from simply oriented lengths,
         to more general measures such areas, volumes etc, each represented as
         bivectors, trivectors, etc respectively
+      </p>
+      <p>
+        We shall now investigate the properties of the 2D wedge product on 
+        bivectors. All the properties mentioned will hold in 
+        higher dimensional bivectors, trivectors, etc.
+      </p>
+      
+      <div id="fig-alt"></div>
+      <script>
+        {
+          let Δ = new Diagram($("#fig-alt"), 400, 400);
+          Δ.scale = 10;
+          let cons = x => { x.P.norm().scl(5) };
+    
+          let col_A = $.css_get("--high-B");
+          let col_B = $.css_get("--high-C");
+    
+          let O = Δ.point(0, 0);
+          O.stroke = "black";
+          O.fill = "black";
 
-        <canvas id="diagram-1"></canvas>
-        <script>
-          const cnv = $("#diagram-1");
-          const ctx = cnv.getContext("2d");
-
-          let [width, height] = [cnv.innerWidth, cnv.innerHeight];
+          let A = Δ.drag_point(8, 0);
           
-          ctx.fillStyle = "red";
-          ctx.fillRect(0, 0, width, height);
-        
-        </script>
+          let B = Δ.drag_point(0, 8);
+          B.fill = col_A;
+          B.stroke = col_A;
+    
+          Δ.line(O, A);
+          Δ.line(O, B).stroke = col_A;
+    
+          let C = Δ.point(8, 8).set_constraint(
+            x => { x.P = A.P.cadd(B.P); }
+          );
+          C.stroke = col_B;
+          C.fill = col_B;
+          
+          let p= Δ.plane(O, A, B, C);
+          p.fill = col_B;
+    
+          Δ.build();
+        }
+      </script>
+    
+      <p>
+        Using the above diagram, we can show that
+        $$a\wedge a = 0$$
+      </p>
+
+      <div id="fig-commute"></div>
+      <script>
+        {
+          let Δ = new Diagram($("#fig-commute"), 400, 400);
+          Δ.scale = 10;
+          let cons = x => { x.P.norm().scl(5) };
+    
+          let col_A = $.css_get("--high-B");
+          let col_B = $.css_get("--high-C");
+    
+          let O = Δ.point(0, 0);
+          O.stroke = "black";
+          O.fill = "black";
+
+          let A = Δ.drag_point(-4, 2);
+          A.fill = col_A;
+          A.stroke = col_A;
+    
+          let B = Δ.drag_point(0, 8).set_constraint(x => { x.P.norm().scl(9); });
+          let C = Δ.drag_point(4, 0).set_constraint(x => { x.P.norm().scl(4); });
+          
+          let Q = Δ.point(0, 4).set_constraint(x => { x.P = A.P.cadd(C.P); });
+          let R = Δ.point(4, 8).set_constraint(x => { x.P = B.P.cadd(C.P); });
+    
+          Δ.line(O, A).stroke = col_A;
+    
+          Δ.line(O, B);
+          Δ.line(O, C);
+          Δ.line(B, R);
+          Δ.line(C, R);
+          
+          let pA = Δ.plane(O, A, C, Q);
+          pA.fill = col_A;
+          
+          let pB = Δ.plane(A, B, Q, R);
+          pB.fill = col_B;
+    
+          Δ.build();
+        }
+      </script>
+
+      <p>
+        Using the above diagram, we can show that
+        $$
+        \begin{aligned} 
+        a\wedge (b + c) &= a \wedge b + a \wedge c
+        \\ a\wedge b &= -b\wedge a
+        \end{aligned}
+        $$
+      </p>
+      <p>
+        And by using the above properties, we can prove the following
+      
+        $$
+        \begin{aligned} 
+        k(a\wedge b) &= (ka)\wedge b = a \wedge (kb)
+        \\ a\wedge b &= a \wedge (b + ka)
+        \end{aligned}
+        $$
       </p>
 
       <p>
+        The properties shown above generalize to higher dimensions
+        easily, and thus apply to trivectors, and other higher 
+        dimensional vectors aswell.  
       </p>
+    
     </div>
   </article>
 
@@ -292,11 +385,17 @@
         \end{vmatrix}
         = \frac{\vec{a} \wedge \vec{b} \wedge \dots \wedge \vec{z}}
           {i \wedge j \wedge \dots}
+        = (\vec{a} \wedge \vec{b} \wedge \dots \wedge \vec{z})I^{-1}
         $$
+        Where \(I\) is the N dimensional unit pseudoscalar/volume 
+      </p>
+
+      <p>
         In short, the determinant represents a generalization 
         of areas, and volumes to N dimensions.
         For instance in 2D, it is the area of a parallelogram spanned by 2 vectors.
         And in 3D, it is the volume of a parallelopiped spanned by 3 vectors.
+        
       </p>
 
       <p>
@@ -321,8 +420,155 @@
       </p>
 
       <aside>
+        <header>
+          The Leibniz determinant formula also follows from the wedge 
+          product definition, and can be used to prove
+          $$\det A^T = \det A$$ 
+        </header>
+        <div class="max"> 
+          <p>
+            For a \(N\times N\) matrix \(A\), instead of expanding one column, we completely expand
+            every column simuntaneously. 
+          </p>
+          
+          $$
+          \begin{aligned}
+          \det(A)I &= 
+                 \begin{pmatrix} a\\\vdots\\\phantom{x} \end{pmatrix}
+          \wedge \begin{pmatrix} \phantom{x}\\\vdots\\b \end{pmatrix}
+          \wedge \begin{pmatrix} \vdots\\c\\\vdots \end{pmatrix}
+          \\ &= \dots + abc(i\wedge k\wedge j) + \dots
+          \\ &= (\dots -acb + \dots)(i\wedge j \wedge k)
+          \end{aligned}
+          $$
+
+          <p>
+            Thus the expansion yields the sum of every possible
+            combination of wedge products terms, taking one 
+            component from each column. 
+            And due to repeated basis vectors equaling zero, 
+            the components are only from unique rows. 
+          </p>
+            
+          <p>
+            The swapping procedure to convert the basis vectors to
+            standard form is formally denoted using the parity 
+            function \(\sigma(\tau)\),
+            
+            $$\sigma(\tau) = (-1)^N$$
+            where \(N\) is the number of swaps required to convert 
+            to standard form, for a given permutation function \(\tau\).
+            For example
+            $$
+            \begin{aligned}
+            \tau = (132) 
+            &= \begin{cases} 
+                 \tau(1) = 1 
+              \\ \tau(2) = 3 
+              \\ \tau(3) = 2
+            \end{cases}
+            \\ \sigma(\tau) = \sigma(132) 
+               &= i\wedge \underbrace{k \wedge j}_{N = \text{1 swap}} 
+            \\ &= (-1)^1(i\wedge j\wedge k) 
+            \\ &= -\sigma(123)
+            \end{aligned}
+            $$
+          </p>
+
+          <p>
+            Thus we can rephrase the above method as, 
+            \(\det(A_{N\times N})\) is the sum of every possible 
+            wedge product taking \(N\) components such that no 
+            row or column is repeated.
+            $$
+              \det(A) = 
+              \underbrace{\sum_{\tau \in S_n}}_\text{sum all combinations}
+              \overbrace{\sigma(\tau)}^\text{correct the sign}
+              \underbrace{\prod_{i = 1}^N a_{i, \tau(i)}}_\text{multiply components}
+            $$
+            Where \(S_n\) is the set of all permutation functions
+            on \((1,\dots N)\).
+            Thus we obtain the Leibniz formula for determinants
+            $$
+              \det(A) = \sum_{\tau \in S_n}
+              \sigma(\tau)\prod_{i = 1}^N a_{i, \tau(i)}
+            = \sum_{\tau \in S_n} \det(D_\tau)
+            $$
+          </p>
+
+          <p>
+            By inspecting our procedure for standardizing any 
+            permutation \(\tau\), we see that it is equivalent to 
+            diagonalizing the <em></em> matrix \(D_\tau\) given below
+
+            $$
+            \begin{aligned}
+            det(D_\tau)I &\coloneqq acb(i\wedge k\wedge j) 
+            \\          &= -abc(i\wedge j\wedge k)
+            \\ \det(D_\tau) &= \begin{vmatrix} 
+                 a &   &  
+              \\   &   & b
+              \\   & c &  
+              \end{vmatrix}
+            \to \begin{vmatrix} 
+                 a &   &   
+              \\   & b &  
+              \\   &   & c 
+              \end{vmatrix}
+            & \text{(column swap)}
+            \\ \det(D^T_\tau) &= \begin{vmatrix} 
+                 a &   &  
+              \\   &   & c
+              \\   & b &  
+              \end{vmatrix}
+            \to \begin{vmatrix} 
+                 a &   &   
+              \\   & b &  
+              \\   &   & c 
+              \end{vmatrix}
+            & \text{(row swap)}
+            \end{aligned}
+            $$
+            But in this format, every column swap on \(D\)
+            corresponds to a row swap in \(D^T\). We can express 
+            every row swap by relabelling two <em> basis 
+            vectors </em>, for example
+            $$
+            \begin{aligned}
+            \det(D_\tau)I
+            &=       \begin{pmatrix} +ai\\+0j\\+0k \end{pmatrix}
+              \wedge \begin{pmatrix} +0i\\+0j\\+bk \end{pmatrix}
+              \wedge \begin{pmatrix} +0i\\+cj\\+0k \end{pmatrix}
+            \\ &=       
+                     \begin{pmatrix} +ai\\+0j\\+0k \end{pmatrix}
+              \wedge \begin{pmatrix} +0i\\+bj\\+0k \end{pmatrix}
+              \wedge \begin{pmatrix} +0i\\+0j\\+ck \end{pmatrix}
+              & (j, k\to k, j)
+            \\ &= abc(i\wedge j\wedge k) 
+            \\ &= abc(i\wedge k\wedge j) & (k, j\to j, k)
+            \\ &= -abc(i\wedge j\wedge k)
+            \end{aligned}
+            $$
+            But as seen from above,
+            row relabeling in \(D^T\) is equivalent to 
+            column swapping on \(D^T\). Thus combining the two
+            previous inferences, column swapping on \(D\) 
+            is equivalent to column swapping on \(D^T\).
+            Hence,
+            $$
+            \begin{aligned}
+            \det(A) &= \sum_{\tau\in S_n} \det(D_\tau) 
+            \\      &= \sum_{\tau\in S_n} \det(D_\tau^T) 
+                    = \det(A^T)
+            \end{aligned}          
+            $$
+          </p>
+        </div>
+      </aside>
+      
+      <aside>
         <header> 
-          Laplace's expansion as mentioned earlier, simply becomes
+          And Laplace's expansion as mentioned earlier, simply becomes
           a specific manner of evaluating the wedge product 
         </header>
         
@@ -370,89 +616,104 @@
 
         </div>
       </aside>
-
-      <aside>
-        <header>
-          The Leibniz determinant formula also follows from the wedge 
-          product definition, and can be used to prove
-          $$\det A^T = \det A$$ 
-        </header>
-        <div class="max"> 
-          <p>
-            For a \(N\times N\) matrix \(A\), instead of expanding one column, we completely expand
-            every column simuntaneously. 
-          </p>
-          
-          $$
-          \begin{aligned}
-          \det(A) &= 
-                 \begin{pmatrix} a\\\vdots\\\phantom{x} \end{pmatrix}
-          \wedge \begin{pmatrix} \phantom{x}\\\vdots\\b \end{pmatrix}
-          \wedge \begin{pmatrix} \vdots\\c\\\vdots \end{pmatrix}
-          \\ &= \dots + abc(i\wedge k\wedge j) + \dots
-          \\ &= (\dots -acb + \dots)(i\wedge j \wedge k)
-          \end{aligned}
-          $$
-
-          <p>
-            Thus the expansion yields the sum of every possible
-            combination of wedge products terms, taking one 
-            component from each column. 
-            And due to repeated basis vectors equaling zero, 
-            the components are only from unique rows. 
-          </p>
-            
-          <p>
-            The swapping procedure is formalized as \(\sigma(\tau)\),
-            also known as the parity function
-
-            $$\sigma(\tau) = (-1)^N$$
-            where \(N\) is the number of steps taken to convert
-            the basis vectors to standard form, for a given 
-            permutation \(\tau\)
-            $$
-            \begin{aligned}
-            \sigma(132) &= i\wedge \underbrace{k \wedge j}_{N = \text{1 swap}} 
-            \\ &= (-1)^1(i\wedge j\wedge k) = -\sigma(123)
-            \end{aligned}
-            $$
-          </p>
-
-          <p>
-            This can be rexpressed as, \(\det(A_{N\times N})\) is 
-            the sum of every possible wedge product taking \(N\) 
-            components such that no row or column is repeated
-          </p>
-
-          $$
-            \det(A) = \sum_{\tau \in S_n}
-            \sigma(\tau)\prod_{i = 1}^n a_{i, \tau(i)}
-          $$
-          $$
-            \det(A) = 
-            \underbrace{\sum_{\tau \in S_n}}_\text{sum all combinations}
-            \overbrace{\sigma(\tau)}^\text{correct the sign}
-            \underbrace{\prod_{i = 1}^n a_{i, \tau(i)}}_\text{multiply components}
-          $$
-          <p>
-
-          </p>
-        </div>
-      </aside>      
     <div>
   </article>
 
   <article>
     <header> 
       <h2> \(A^{-1}x\) : Cramer's Rule </h2> 
-      <p> Linear equations </p> 
+      <p> bolts of vectors </p> 
     </header>
+    <div class="content">
+      <p>
+        Another equally useful application of wedge products
+        is in solving system of N linear equations (SLEs)
+        $$
+        \begin{aligned}
+          a_1x + b_1y + \dots &= Λ_1
+        \\ a_2x + b_2y + \dots &= Λ_2
+        \\        \vdots
+        \\ a_nx + b_ny + \dots &= Λ_n
+        \end{aligned}
+        $$
+        The above SLE can be reexpressed as a single 
+        vector equation in N dimensions
+        $$ax + by + \dots = Λ$$
+      </p>
+      <p> 
+        By using the property \(a\wedge a = 0\), we can isolate
+        a single variable as follows
+        $$
+        \begin{aligned}
+        ax + by + \dots &= Λ
+        \\ (a\wedge b)x + (b\wedge b)y + \dots &= Λ\wedge b
+        \\ (a\wedge b)x + 0 + (c\wedge b)z + \dots &= Λ\wedge b
+        \\ \vdots
+        \\ (a\wedge b\wedge c \dots)x &= Λ\wedge b\wedge c\dots
+        \\ x &= \frac{Λ\wedge b \wedge c \dots}{a\wedge b\wedge c\dots}
+        \end{aligned}
+        $$
+        If we denote \((x,y,\dots\)) as a vector \(X\),
+        \((a,b,\dots)\) as a matrix \(A\) then we obtain
+        $$
+        X = \frac{1}{a\wedge b\wedge c\dots}
+        \begin{bmatrix}
+          Λ\wedge b \wedge c \dots
+        \\ a\wedge Λ \wedge c \dots
+        \\ a\wedge b \wedge Λ \dots
+        \\ \vdots
+        \end{bmatrix}
+        = \frac{1}{\det A}
+        \begin{bmatrix}
+           \det A_Λ(1)
+        \\ \det A_Λ(2)
+        \\ \det A_Λ(3)
+        \\ \vdots
+        \end{bmatrix}
+        $$
+        Where \(A_Λ(n)\) is the matrix
+        \(A\), with the \(n^\text{th}\) column replaced by \(Λ\), Which 
+        gives us cramers rule.
+      </p>
+      <aside>
+        <header> 
+          From the above result, it can be shown that the inverse of a matrix, is given by
+          $$A^{-1} = \frac{\mathrm{adj}(A)}{\det A}$$
+  
+          
+        </header>
+        <div class="max">
+          First note that
+          $$AA^{-1} = I \to AA^{-1}_j = I_j = ε_j$$  
+
+          Where \(ε_i\) is the \(i^\text{th}\) basis vector, and
+          \(A_j\) is the \(j^\text{th}\) column        
+          $$A^{-1}_j = \frac{1}{\det A}
+          \begin{bmatrix}
+             \det A_{ε_j}(1)
+          \\ \det A_{ε_j}(2)
+          \\ \vdots
+          \end{bmatrix}
+          $$
+          As only the \(i^{th}\) component of \(ε_i\) is non zero, 
+          we can use Laplace's expansion along column \(j\), yielding  
+          $$\det A_{ε_j}(i) = (-1)^{i+j}\det M_{ij}$$
+          Where \(M_{ij}\) is a minor of A. Thus in general,
+          $$A^{-1}_{ij} = \frac{1}{\det A}(-1)^{i+j}\det M_{ij}$$
+          If we define
+          $$\mathrm{adj}(A) = (-1)^{i+j}\det M_{ij}$$
+          We get the inverse matrix formula,
+          $$A^{-1} = \frac{\mathrm{adj}(A)}{\det A}$$
+  
+        </div>
+      </aside>
+    </div>
   </article>
 
   <article>
     <header> 
       <h2> \(\mathcal{G}^n\) : Geometric Algebra </h2> 
-      <p> Out with the new and ... in with the old ? </p> 
+      <p> Old beginnings ? </p> 
     </header>
   </article>
 
